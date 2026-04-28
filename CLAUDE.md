@@ -11,7 +11,7 @@ No build step or server required — open the HTML files directly in a browser:
 
 ## Git workflow
 
-After every completed task: stage the relevant files, commit with a clean message, and push to GitHub.
+**This is mandatory, not optional.** Commit and push to GitHub at the end of every task — no exceptions. The goal is that the remote always reflects the latest working state so nothing is ever lost.
 
 ```bash
 git add <files>
@@ -20,6 +20,12 @@ git push
 ```
 
 Remote: `https://github.com/nightsamuraiii/claude-code-projects` (branch: `master`)
+
+Rules:
+- Commit after **every meaningful unit of work**: new feature, bug fix, new file, content change, config update.
+- Never batch multiple unrelated changes into one commit — one logical change per commit.
+- Commit messages use the imperative mood and a short subject line (e.g. `Add enemy rage mode`, `Fix sniper telegraph offset`, `Update level 3 wave counts`).
+- Push immediately after every commit — do not let commits pile up locally.
 
 ## Project structure
 
