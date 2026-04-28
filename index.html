@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #070d07;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', monospace;
+      color: #00ff41;
+    }
+
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 18px #00ff41;
+    }
+
+    p.sub {
+      font-size: 0.8rem;
+      color: rgba(0,255,65,0.4);
+      letter-spacing: 2px;
+      margin-bottom: 3rem;
+    }
+
+    .games {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    a.card {
+      display: block;
+      width: 220px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(0,255,65,0.3);
+      text-decoration: none;
+      color: #00ff41;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+      text-align: center;
+    }
+
+    a.card:hover {
+      border-color: #00ff41;
+      box-shadow: 0 0 20px rgba(0,255,65,0.25);
+      transform: translateY(-3px);
+    }
+
+    .card-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+    .card-title { font-size: 1rem; font-weight: bold; letter-spacing: 3px; margin-bottom: 0.5rem; }
+    .card-desc  { font-size: 0.72rem; color: rgba(0,255,65,0.5); letter-spacing: 1px; line-height: 1.5; }
+
+    footer {
+      margin-top: 3.5rem;
+      font-size: 0.7rem;
+      color: rgba(0,255,65,0.2);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Game Arcade</h1>
+  <p class="sub">SELECT A GAME</p>
+
+  <div class="games">
+    <a class="card" href="/shooter/index.html">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">VECTOR KILL</div>
+      <div class="card-desc">Top-down shooter · 5 levels · Boss fight · CRT style</div>
+    </a>
+    <a class="card" href="/tictactoe.html">
+      <div class="card-icon">⬜</div>
+      <div class="card-title">TIC TAC TOE</div>
+      <div class="card-desc">2-player · Score tracking · Classic</div>
+    </a>
+  </div>
+
+  <footer>RUNNING ON LOCALHOST:8080</footer>
+
+</body>
+</html>
