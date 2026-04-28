@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vector Kill</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #010401;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #wrap {
+      width: 800px;
+      max-width: 100vw;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: crosshair;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    #wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border: 1px solid rgba(0, 255, 65, 0.18);
+      pointer-events: none;
+      box-shadow:
+        0 0 24px rgba(0, 255, 65, 0.12),
+        inset 0 0 24px rgba(0, 255, 65, 0.04);
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="game"></canvas>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

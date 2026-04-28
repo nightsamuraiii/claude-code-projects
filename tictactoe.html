@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #1a1a2e;
+      font-family: 'Segoe UI', sans-serif;
+      color: #eee;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #e94560;
+    }
+
+    #status {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      min-height: 1.5rem;
+      color: #a8dadc;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 110px);
+      grid-template-rows: repeat(3, 110px);
+      gap: 8px;
+    }
+
+    .cell {
+      width: 110px;
+      height: 110px;
+      background: #16213e;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      user-select: none;
+    }
+
+    .cell:hover:not(.taken) {
+      background: #0f3460;
+      transform: scale(1.05);
+    }
+
+    .cell.x { color: #e94560; }
+    .cell.o { color: #a8dadc; }
+
+    .cell.win {
+      background: #0f3460;
+      box-shadow: 0 0 16px rgba(233, 69, 96, 0.6);
+    }
+
+    #reset {
+      margin-top: 2rem;
+      padding: 0.7rem 2.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #e94560;
+      color: #fff;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    #reset:hover {
+      background: #c73652;
+      transform: scale(1.05);
+    }
+
+    #scores {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-box {
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .score-value {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .score-box.x .score-value { color: #e94560; }
+    .score-box.o .score-value { color: #a8dadc; }
+    .score-box.draw .score-value { color: #888; }
+  </style>
+</head>
+<body>
+
+  <h1>Tic Tac Toe</h1>
+
+  <div id="scores">
+    <div class="score-box x">
+      <div class="score-label">X</div>
+      <div class="score-value" id="score-x">0</div>
+    </div>
+    <div class="score-box draw">
+      <div class="score-label">Draw</div>
+      <div class="score-value" id="score-draw">0</div>
+    </div>
+    <div class="score-box o">
+      <div class="score-label">O</div>
+      <div class="score-value" id="score-o">0</div>
+    </div>
+  </div>
+
+  <div id="status">Player X's turn</div>
+
+  <div id="board">
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+  </div>
+
+  <button id="reset">New Game</button>
+
+  <script>
+    const WINS = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+
+    let board, current, gameOver;
+    const scores = { X: 0, O: 0, Draw: 0 };
+
+    const cells = document.querySelectorAll('.cell');
+    const status = document.getElementById('status');
+    const scoreX = document.getElementById('score-x');
+    const scoreO = document.getElementById('score-o');
+    const scoreDraw = document.getElementById('score-draw');
+
+    function init() {
+      board = Array(9).fill('');
+      current = 'X';
+      gameOver = false;
+      cells.forEach(c => {
+        c.textContent = '';
+        c.className = 'cell';
+      });
+      status.textContent = `Player X's turn`;
+    }
+
+    function checkWinner() {
+      for (const [a, b, c] of WINS) {
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return { winner: board[a], line: [a, b, c] };
+        }
+      }
+      if (board.every(v => v)) return { winner: 'Draw' };
+      return null;
+    }
+
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        const i = +cell.dataset.index;
+        if (gameOver || board[i]) return;
+
+        board[i] = current;
+        cell.textContent = current;
+        cell.classList.add(current.toLowerCase(), 'taken');
+
+        const result = checkWinner();
+        if (result) {
+          gameOver = true;
+          if (result.winner === 'Draw') {
+            status.textContent = "It's a draw!";
+            scores.Draw++;
+            scoreDraw.textContent = scores.Draw;
+          } else {
+            status.textContent = `Player ${result.winner} wins!`;
+            result.line.forEach(idx => cells[idx].classList.add('win'));
+            scores[result.winner]++;
+            if (result.winner === 'X') scoreX.textContent = scores.X;
+            else scoreO.textContent = scores.O;
+          }
+        } else {
+          current = current === 'X' ? 'O' : 'X';
+          status.textContent = `Player ${current}'s turn`;
+        }
+      });
+    });
+
+    document.getElementById('reset').addEventListener('click', init);
+
+    init();
+  </script>
+
+</body>
+</html>
